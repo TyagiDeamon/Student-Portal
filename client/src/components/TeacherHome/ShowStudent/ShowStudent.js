@@ -39,7 +39,7 @@ export default function ShowStudent() {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/teacher/${saved}`)
+			.get(`https://student---portal.herokuapp.com/teacher/${saved}`)
 			.then((response) => setTeacher(response.data));
 	}, []);
 

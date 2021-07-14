@@ -39,7 +39,7 @@ export default function MarksTable() {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/student/${saved}`)
+			.get(`https://student---portal.herokuapp.com/student/${saved}`)
 			.then((response) => setStudent(response.data));
 		// empty dependency array means this effect will only run once (like componentDidMount in classes)
 	}, []);

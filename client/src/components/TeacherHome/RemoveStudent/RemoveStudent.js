@@ -40,7 +40,7 @@ export default function RemoveStudent() {
 
 		try {
 			await axios.post(
-				"http://localhost:5000/teacher/removeStudent",
+				"https://student---portal.herokuapp.com/teacher/removeStudent",
 				{
 					username: saved,
 					roll: student.roll,

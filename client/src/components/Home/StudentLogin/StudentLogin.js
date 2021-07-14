@@ -26,9 +26,11 @@ export default function StudentLogin() {
 
 	const loginStudent = () => {
 		axios
-			.post("http://localhost:5000/authStudent/login", student)
+			.post(
+				"https://student---portal.herokuapp.com/authStudent/login",
+				student
+			)
 			.then(function (response) {
-				
 				localStorage.setItem(
 					`http://localhost:3000/student/${student.roll}`,
 					JSON.stringify(student.roll)

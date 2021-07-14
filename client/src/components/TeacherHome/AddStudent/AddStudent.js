@@ -39,7 +39,10 @@ export default function AddStudent() {
 		var finalRes = "";
 
 		try {
-			await axios.post("http://localhost:5000/teacher/addStudent", query);
+			await axios.post(
+				"https://student---portal.herokuapp.com/teacher/addStudent",
+				query
+			);
 		} catch (error) {
 			finalRes = error.response.data;
 		}

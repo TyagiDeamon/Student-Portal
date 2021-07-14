@@ -36,9 +36,12 @@ export default function StudentSignup() {
 			return;
 		}
 		axios
-			.post("http://localhost:5000/authStudent/register", student)
+			.post(
+				"https://student---portal.herokuapp.com/authStudent/register",
+				student
+			)
 			.then(function () {
-                window.location.reload(false);
+				window.location.reload(false);
 			});
 	};
 	return (

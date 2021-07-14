@@ -27,7 +27,10 @@ export default function TeacherSignup() {
 
 	const createTeacher = () => {
 		axios
-			.post("http://localhost:5000/authTeacher/register", teacher)
+			.post(
+				"https://student---portal.herokuapp.com/authTeacher/register",
+				teacher
+			)
 			.then(function () {
 				alert("Successful! Please login to continue");
 			})

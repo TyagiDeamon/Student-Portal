@@ -9,7 +9,7 @@ import validateLoginData from "../../Auth_teacher/login.js";
 
 import Teacher from "../../models/Teacher.js";
 
-import keys from "../../config/keys.js"
+// import keys from "../../config/keys.js"
 
 router.post("/register", (req, res) => {
 	//form validation
@@ -78,7 +78,7 @@ router.post("/login", (req, res) => {
 				}; // Sign token
 				jwt.sign(
 					payload,
-					keys.secretOrKey,
+					process.env.secretOrKey,
 					{
 						expiresIn: 31556926, // 1 year in seconds
 					},

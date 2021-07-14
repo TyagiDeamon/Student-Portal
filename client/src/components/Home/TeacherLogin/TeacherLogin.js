@@ -24,10 +24,6 @@ export default function TeacherLogin() {
 		username: "",
 		password: "",
 	});
-	// const [finalRes, setfinalRes] = useState({
-	// 	username: "",
-	// 	password: "",
-	// });
 
 	let finalRes = {};
 
@@ -35,7 +31,7 @@ export default function TeacherLogin() {
 	const loginTeacher = async () => {
 		try {
 			await axios.post(
-				"http://localhost:5000/authTeacher/login",
+				"https://student---portal.herokuapp.com/authTeacher/login",
 				teacher
 			);
 		} catch (error) {

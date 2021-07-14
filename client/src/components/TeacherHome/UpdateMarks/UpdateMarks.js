@@ -52,7 +52,10 @@ export default function AddStudent() {
 		};
 
 		axios
-			.put("http://localhost:5000/student/updateMarks", query)
+			.put(
+				"https://student---portal.herokuapp.com/student/updateMarks",
+				query
+			)
 			.then(() => {
 				alert(`Updated marks of student Roll No: ${student.roll}`);
 			})
