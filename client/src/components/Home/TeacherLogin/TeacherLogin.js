@@ -17,8 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TeacherLogin() {
-	
-
 	const classes = useStyles();
 	const [teacher, setTeacher] = useState({
 		username: "",
@@ -27,7 +25,6 @@ export default function TeacherLogin() {
 
 	let finalRes = {};
 
-	
 	const loginTeacher = async () => {
 		try {
 			await axios.post(
@@ -38,25 +35,20 @@ export default function TeacherLogin() {
 			finalRes = error.response.data;
 		}
 
-		if (finalRes.username)
-		{
+		if (finalRes.username) {
 			alert(finalRes.username);
-		}
-		else if (finalRes.password)
-		{
+		} else if (finalRes.password) {
 			alert(finalRes.password);
-		}
-		else
-		{
+		} else {
 			localStorage.setItem(
-				`http://localhost:3000/teacher/${teacher.username}`,
+				`https://kt-studentportal.netlify.app/teacher/${teacher.username}`,
 				JSON.stringify(teacher.username)
 			);
 
-				window.location = `http://localhost:3000/teacher/${teacher.username}`;
+			window.location = `https://kt-studentportal.netlify.app/teacher/${teacher.username}`;
 		}
 	};
-	
+
 	return (
 		<>
 			<h2>Teacher Login</h2>

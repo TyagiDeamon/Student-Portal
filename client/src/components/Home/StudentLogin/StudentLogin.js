@@ -32,10 +32,10 @@ export default function StudentLogin() {
 			)
 			.then(function (response) {
 				localStorage.setItem(
-					`http://localhost:3000/student/${student.roll}`,
+					`https://kt-studentportal.netlify.app/student/${student.roll}`,
 					JSON.stringify(student.roll)
 				);
-				window.location = `http://localhost:3000/student/${student.roll}`;
+				window.location = `https://kt-studentportal.netlify.app/student/${student.roll}`;
 			});
 	};
 	return (

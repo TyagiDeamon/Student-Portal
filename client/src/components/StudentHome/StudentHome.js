@@ -13,11 +13,11 @@ const StudentHome = () => {
 	const logOut = () => {
 		localStorage.removeItem(window.location);
 
-		window.location = "http://localhost:3000";
+		window.location = "https://kt-studentportal.netlify.app/";
 	};
 
 	const classes = useStyles();
-	
+
 	return (
 		<>
 			<CustomNavbar {...navbar} />
