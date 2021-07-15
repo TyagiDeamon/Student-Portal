@@ -17,14 +17,14 @@ router.post("/register", (req, res) => {
 	const { errors, isValid } = validateRegisterData(req.body);
 
 	if (!isValid) {
-		return res.status(404).json(errors);
+		return res.status(404).send(errors);
 	}
 
 	Teacher.findOne({ username: req.body.username }).then((teacher) => {
 		if (teacher) {
 			return res
 				.status(400)
-				.json({ username: "Username already exists" });
+				.send({ username: "Username already exists!" });
 		} else {
 			const newTeacher = new Teacher({
 				username: req.body.username,

@@ -39,9 +39,13 @@ export default function AddStudent() {
 		});
 	};
 
-	const updateMarks = () => {
+	let finalRes = null;
+
+	const updateMarks = async () => {
 		if (!saved) {
 			alert("Please login to continue");
+
+			window.location = "https://kt-studentportal.netlify.app/";
 			return;
 		}
 		const query = {
@@ -51,17 +55,22 @@ export default function AddStudent() {
 			term: student.term,
 		};
 
-		axios
-			.put(
+		try {
+			await axios.put(
 				"https://student---portal.herokuapp.com/student/updateMarks",
 				query
-			)
-			.then(() => {
-				alert(`Updated marks of student Roll No: ${student.roll}`);
-			})
-			.then(function () {
-				window.location.reload(false);
-			});
+			);
+		} catch (error) {
+			finalRes = error.response.data;
+		}
+
+		if (finalRes) {
+			alert(finalRes);
+		} else {
+			alert(`Updated marks of student Roll No: ${student.roll}`);
+
+			window.location.reload(false);
+		}
 	};
 	return (
 		<>
@@ -83,7 +92,6 @@ export default function AddStudent() {
 					}}
 				/>
 				<TextField
-					id="filled-full-width"
 					label="Marks"
 					type="number"
 					style={{ margin: "10px 20px" }}
@@ -107,12 +115,7 @@ export default function AddStudent() {
 					<InputLabel id="demo-simple-select-filled-label">
 						Select term
 					</InputLabel>
-					<Select
-						labelId="demo-simple-select-filled-label"
-						id="demo-simple-select-filled"
-						value={student.term}
-						onChange={handleChange}
-					>
+					<Select value={student.term} onChange={handleChange}>
 						<MenuItem value={"term1"}>Term-1</MenuItem>
 						<MenuItem value={"term2"}>Term-2</MenuItem>
 						<MenuItem value={"term3"}>Term-3</MenuItem>

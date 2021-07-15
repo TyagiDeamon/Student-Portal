@@ -6,7 +6,7 @@ export const getStudents = async (req, res) => {
 		const allStudents = await Student.find();
 		res.status(200).json(allStudents);
 	} catch (err) {
-		res.status(404).json({ message: err.message });
+		res.status(404).send({ message: err.message });
 	}
 };
 
@@ -15,7 +15,7 @@ export const getStudentByRoll = async (req, res) => {
 		const student = await Student.findOne({ roll: req.params.roll });
 		res.status(200).json(student);
 	} catch (err) {
-		res.status(404).json({ message: err.message });
+		res.status(404).send({ message: err.message });
 	}
 };
 
@@ -56,6 +56,10 @@ export const updateMarks = async (req, res) => {
 		const student = await Student.findOne({
 			roll: request.roll,
 		});
+
+		if (!student) {
+			return res.status(404).send("Student not found")
+		}
 
 		const teacher = await Teacher.findOne({ username: request.username });
 

@@ -5,18 +5,13 @@ export default function validateRegisterData(data) {
 	let errors = {};
 
 	data.name = !isEmpty(data.name) ? data.name : "";
-	data.subject = !isEmpty(data.subject) ? data.subject : "";
 	data.password = !isEmpty(data.password) ? data.password : "";
 	data.password2 = !isEmpty(data.password2) ? data.password2 : "";
-	data.roll = !isEmpty(data.roll) ? data.roll : null;
+	data.roll = !isEmpty(data.roll) ? data.roll : "";
 
 	if (Validator.isEmpty(data.name)) {
 		errors.name = "Name field is required";
 	}
-
-	// if (Validator.isEmpty(data.subject)) {
-	// 	errors.subject = "Subject field is required";
-	// }
 
 	if (Validator.isEmpty(data.password)) {
 		errors.password = "Password field is required";

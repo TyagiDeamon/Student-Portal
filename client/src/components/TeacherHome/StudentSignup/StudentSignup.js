@@ -20,29 +20,47 @@ export default function StudentSignup() {
 	let stored = localStorage.getItem(window.location);
 	let saved = JSON.parse(stored);
 
-    const classes = useStyles();
+	const classes = useStyles();
 	const [student, setStudent] = useState({
 		name: "",
 		password: "",
 		password2: "",
 		teacherUsername: saved,
-		subject: "",
-        roll: "",
+		roll: "",
 	});
 
-	const createStudent = () => {
+	let finalRes = {};
+
+	const createStudent = async () => {
 		if (!saved) {
 			alert("Please login to continue");
+
+			window.location = "https://kt-studentportal.netlify.app/";
+
 			return;
 		}
-		axios
-			.post(
+		try {
+			await axios.post(
 				"https://student---portal.herokuapp.com/authStudent/register",
 				student
-			)
-			.then(function () {
-				window.location.reload(false);
-			});
+			);
+		} catch (error) {
+			finalRes = error.response.data;
+		}
+
+		if (finalRes.name) {
+			alert(finalRes.name);
+		} else if (finalRes.roll) {
+			alert(finalRes.roll);
+		} else if (finalRes.password) {
+			alert(finalRes.password);
+		} else if (finalRes.password2) {
+			alert(finalRes.password2);
+		} else {
+			alert("Successfully created!");
+
+			window.location.reload(false);
+		}
 	};
 	return (
 		<>

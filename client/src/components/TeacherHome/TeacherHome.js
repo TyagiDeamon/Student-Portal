@@ -8,6 +8,7 @@ import AddStudent from "./AddStudent/AddStudent";
 import UpdateMarks from "./UpdateMarks/UpdateMarks";
 import RemoveStudent from "./RemoveStudent/RemoveStudent";
 import Button from "@material-ui/core/Button";
+import Footer from "../Footer/Footer";
 
 const navbar = {
 	title: "Welcome Teacher",
@@ -168,6 +169,9 @@ const TeacherHome = () => {
 							</AppBar>
 						)}
 					</Grid>
+				</Grid>
+				<Grid>
+					<Footer />
 				</Grid>
 			</Container>
 		</>

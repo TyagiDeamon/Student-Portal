@@ -4,6 +4,7 @@ import CustomNavbar from "../Navbar/Navbar.js";
 import useStyles from "../../style";
 import MarksTable from "./MarksTable/MarksTable";
 import Button from "@material-ui/core/Button";
+import Footer from "../Footer/Footer";
 
 const navbar = {
 	title: "Welcome Student",
@@ -49,6 +50,9 @@ const StudentHome = () => {
 							Logout
 						</Button>
 					</Grid>
+				</Grid>
+				<Grid>
+					<Footer />
 				</Grid>
 			</Container>
 		</>

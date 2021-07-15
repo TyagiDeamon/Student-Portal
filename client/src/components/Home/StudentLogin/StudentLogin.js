@@ -24,26 +24,37 @@ export default function StudentLogin() {
 		password: "",
 	});
 
-	const loginStudent = () => {
-		axios
-			.post(
+	let finalRes = {};
+
+	const loginStudent = async () => {
+		try {
+			await axios.post(
 				"https://student---portal.herokuapp.com/authStudent/login",
 				student
-			)
-			.then(function (response) {
-				localStorage.setItem(
-					`https://kt-studentportal.netlify.app/student/${student.roll}`,
-					JSON.stringify(student.roll)
-				);
-				window.location = `https://kt-studentportal.netlify.app/student/${student.roll}`;
-			});
+			);
+		} catch (error) {
+			finalRes = error.response.data;
+		}
+
+		if (finalRes.name) {
+			alert(finalRes.name);
+		} else if (finalRes.roll) {
+			alert(finalRes.roll);
+		} else if (finalRes.password) {
+			alert(finalRes.password);
+		} else {
+			localStorage.setItem(
+				`https://kt-studentportal.netlify.app/student/${student.roll}`,
+				JSON.stringify(student.roll)
+			);
+			window.location = `https://kt-studentportal.netlify.app/student/${student.roll}`;
+		}
 	};
 	return (
 		<>
 			<h2>Student Login</h2>
 			<form className={classes.root} noValidate autoComplete="off">
 				<TextField
-					id="filled-full-width"
 					label="Name"
 					style={{ margin: "10px 20px" }}
 					fullWidth
@@ -58,7 +69,6 @@ export default function StudentLogin() {
 					}}
 				/>
 				<TextField
-					id="filled-full-width"
 					label="Roll No"
 					style={{ margin: "10px 20px" }}
 					fullWidth
@@ -73,7 +83,6 @@ export default function StudentLogin() {
 					}}
 				/>
 				<TextField
-					id="filled-full-width"
 					label="Password"
 					type="password"
 					style={{ margin: "10px 20px" }}

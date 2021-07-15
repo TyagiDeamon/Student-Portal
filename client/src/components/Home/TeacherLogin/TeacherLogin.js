@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -54,7 +54,6 @@ export default function TeacherLogin() {
 			<h2>Teacher Login</h2>
 			<form className={classes.root} noValidate autoComplete="off">
 				<TextField
-					id="filled-full-width"
 					label="Username"
 					style={{ margin: "10px 20px" }}
 					fullWidth
@@ -69,7 +68,6 @@ export default function TeacherLogin() {
 					}}
 				/>
 				<TextField
-					id="filled-full-width"
 					label="Password"
 					type="password"
 					style={{ margin: "10px 20px" }}

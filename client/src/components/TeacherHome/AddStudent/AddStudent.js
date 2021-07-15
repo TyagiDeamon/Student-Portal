@@ -26,17 +26,19 @@ export default function AddStudent() {
 		roll: "",
 	});
 
+	let finalRes = null;
+
 	const addStudent = async () => {
 		if (!saved) {
 			alert("Please login to continue");
+
+			window.location = "https://kt-studentportal.netlify.app/";
 			return;
 		}
 		const query = {
 			username: saved,
 			roll: student.roll,
 		};
-
-		var finalRes = "";
 
 		try {
 			await axios.post(
@@ -47,12 +49,11 @@ export default function AddStudent() {
 			finalRes = error.response.data;
 		}
 
-		if (finalRes == "")
-		{
-			alert(`Added Roll No: ${student.roll}`);
-			window.location.reload(false);	
-		} else {
+		if (finalRes) {
 			alert(finalRes);
+		} else {
+			alert(`Added Roll No: ${student.roll}`);
+			window.location.reload(false);
 		}
 	};
 	return (

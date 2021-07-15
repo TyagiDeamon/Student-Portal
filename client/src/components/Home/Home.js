@@ -6,6 +6,7 @@ import CustomNavbar from "../Navbar/Navbar";
 import TeacherSignup from "./TeacherSignup/TeacherSignup.js";
 import TeacherLogin from "./TeacherLogin/TeacherLogin";
 import StudentLogin from "./StudentLogin/StudentLogin";
+import Footer from "../Footer/Footer";
 
 const navbar = {
 	title: "STUDENT PORTAL",
@@ -47,6 +48,8 @@ export default function Home() {
 						</AppBar>
 					</Grid>
 				</Grid>
+
+				<Grid><Footer /></Grid>
 			</Container>
 		</>
 	);

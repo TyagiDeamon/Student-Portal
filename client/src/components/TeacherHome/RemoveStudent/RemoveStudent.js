@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+let finalRes = null;
+
 export default function RemoveStudent() {
 	let stored = localStorage.getItem(window.location);
 	let saved = JSON.parse(stored);
@@ -26,11 +28,11 @@ export default function RemoveStudent() {
 		roll: "",
 	});
 
-	var finalRes = "";
-
 	const removeStudent = async () => {
 		if (!saved) {
 			alert("Please login to continue");
+
+			window.location = "https://kt-studentportal.netlify.app/";
 			return;
 		}
 		const query = {
@@ -41,20 +43,17 @@ export default function RemoveStudent() {
 		try {
 			await axios.post(
 				"https://student---portal.herokuapp.com/teacher/removeStudent",
-				{
-					username: saved,
-					roll: student.roll,
-				}
+				query
 			);
 		} catch (error) {
 			finalRes = error.response.data;
 		}
 
-		if (finalRes == "") {
+		if (finalRes) {
+			alert(finalRes);
+		} else {
 			alert(`Successfully removed Roll No: ${student.roll}`);
 			window.location.reload(false);
-		} else {
-			alert(finalRes);
 		}
 	};
 	return (

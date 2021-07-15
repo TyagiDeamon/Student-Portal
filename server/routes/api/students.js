@@ -13,26 +13,20 @@ import Teacher from "../../models/Teacher.js";
 
 router.post("/register", async (req, res) => {
 	//form validation
-	const teacherusername = req.body.teacherusername;
 
 	const teacher = await Teacher.findOne({
 		username: req.body.teacherUsername,
 	});
-	// console.log(teacher);
-
-	if (!teacher) {
-		res.status(404).send("Teacher username not found");
-	}
 
 	const { errors, isValid } = validateRegisterData(req.body);
 
 	if (!isValid) {
-		return res.status(404).json(errors);
+		return res.status(404).send(errors);
 	}
 
 	Student.findOne({ roll: req.body.roll }).then((student) => {
 		if (student) {
-			return res.status(400).json({ roll: "Roll No already exists" });
+			return res.status(400).send({ roll: "Roll No already exists" });
 		} else {
 			const newStudent = new Student({
 				name: req.body.name,
@@ -76,7 +70,7 @@ router.post("/login", (req, res) => {
 
 	// Check validation
 	if (!isValid) {
-		return res.status(400).json(errors);
+		return res.status(400).send(errors);
 	}
 
 	const roll = req.body.roll;
@@ -87,7 +81,11 @@ router.post("/login", (req, res) => {
 		if (!student) {
 			return res
 				.status(404)
-				.json({ studentnotfound: "Student not found" });
+				.send({ name: "Student not found" });
+		}
+
+		if (student.name != req.body.name) {
+			return res.status(404).send({ name: "Name doesn't match with the provided Roll No" });
 		}
 		// Check password
 		bcrypt.compare(password, student.password).then((isMatch) => {
@@ -114,7 +112,7 @@ router.post("/login", (req, res) => {
 			} else {
 				return res
 					.status(400)
-					.json({ passwordincorrect: "Password incorrect" });
+					.send({ passwordincorrect: "Password incorrect" });
 			}
 		});
 	});

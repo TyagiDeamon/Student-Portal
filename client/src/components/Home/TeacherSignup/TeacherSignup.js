@@ -25,25 +25,37 @@ export default function TeacherSignup() {
 		subject: "",
 	});
 
-	const createTeacher = () => {
-		axios
-			.post(
+	let finalRes = {};
+	
+	const createTeacher = async () => {
+		try {
+			await axios.post(
 				"https://student---portal.herokuapp.com/authTeacher/register",
 				teacher
-			)
-			.then(function () {
-				alert("Successful! Please login to continue");
-			})
-			.then(() => {
-				window.location.reload(false);
-			});
+			);
+		} catch (error) {
+			finalRes = error.response.data;
+		}
+
+		if (finalRes.username) {
+			alert(finalRes.username);
+		} else if (finalRes.password) {
+			alert(finalRes.password);
+		} else if (finalRes.password2) {
+			alert(finalRes.password2);
+		} else if (finalRes.subject) {
+			alert(finalRes.subject);
+		} else {
+			alert("Successful! Please login to continue");
+
+			window.location.reload(false);
+		}
 	};
 	return (
 		<>
 			<h2>Teacher Signup</h2>
 			<form className={classes.root} noValidate autoComplete="off">
 				<TextField
-					id="filled-full-width"
 					label="Create Username"
 					style={{ margin: "10px 20px" }}
 					fullWidth
@@ -58,7 +70,6 @@ export default function TeacherSignup() {
 					}}
 				/>
 				<TextField
-					id="filled-full-width"
 					label="Subject"
 					style={{ margin: "10px 20px" }}
 					fullWidth
@@ -73,7 +84,6 @@ export default function TeacherSignup() {
 					}}
 				/>
 				<TextField
-					id="filled-full-width"
 					label="Create password"
 					type="password"
 					style={{ margin: "10px 20px" }}
@@ -89,7 +99,6 @@ export default function TeacherSignup() {
 					}}
 				/>
 				<TextField
-					id="filled-full-width"
 					label="Confirm password"
 					type="password"
 					style={{ margin: "10px 20px" }}
