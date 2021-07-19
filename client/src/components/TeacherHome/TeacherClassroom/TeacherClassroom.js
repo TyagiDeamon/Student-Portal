@@ -82,7 +82,7 @@ const TeacherClassroom = () => {
 							Logout
 						</Button>
 						{formButtons.map((item, key) => (
-							<>
+							<div key={key}>
 								<CustomModal
 									modal={item.modal}
 									onClickbutton1={() => item.setmodal(false)}
@@ -98,7 +98,7 @@ const TeacherClassroom = () => {
 								>
 									{item.text}
 								</Button>
-							</>
+							</div>
 						))}
 					</Grid>
 				</Grid>
