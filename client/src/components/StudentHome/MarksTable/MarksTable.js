@@ -16,7 +16,10 @@ const useStyles = makeStyles({
 });
 
 export default function MarksTable() {
+	let stored = localStorage.getItem("student");
+	// let saved = JSON.parse(stored);
 	const [student, setStudent] = useState({
+		email: "",
 		roll: "",
 		password: "",
 		name: "",
@@ -34,64 +37,64 @@ export default function MarksTable() {
 		],
 	});
 
-	let stored = localStorage.getItem(window.location);
-	let saved = JSON.parse(stored);
-
 	useEffect(() => {
 		axios
-			.get(`https://student---portal.herokuapp.com/student/${saved}`)
+			.get(`https://student---portal.herokuapp.com/student/${stored}`)
 			.then((response) => setStudent(response.data));
-		// empty dependency array means this effect will only run once (like componentDidMount in classes)
 	}, []);
 
 	const classes = useStyles();
 
-	if (!saved) {
+	if (!stored) {
 		return <div>Access Denied</div>;
 	}
 
 	return (
 		<>
 			<h2>Marks</h2>
-			<TableContainer component={Paper}>
-				<Table className={classes.table} aria-label="simple table">
+			<TableContainer style={{ maxHeight: "60vh" }} component={Paper}>
+				<Table stickyHeader className={classes.table} aria-label="simple table">
 					<TableHead>
 						<TableRow>
-							<TableCell align="center">Subject</TableCell>
-							<TableCell align="center">Term-1</TableCell>
-							<TableCell align="center">Term-2</TableCell>
-							<TableCell align="center">Term-3</TableCell>
-							<TableCell align="center">Term-4</TableCell>
-							<TableCell align="center">Total</TableCell>
+							<TableCell align="center">
+								<b>Subject</b>
+							</TableCell>
+							<TableCell align="center">
+								<b>Term-1</b>
+							</TableCell>
+							<TableCell align="center">
+								<b>Term-2</b>
+							</TableCell>
+							<TableCell align="center">
+								<b>Term-3</b>
+							</TableCell>
+							<TableCell align="center">
+								<b>Term-4</b>
+							</TableCell>
+							<TableCell align="center">
+								<b>Total</b>
+							</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{student.scores.map((item, key) => (
-							<TableRow key={key}>
-								<TableCell
-									component="th"
-									scope="row"
-									align="center"
-								>
-									{item.subject}
-								</TableCell>
-								<TableCell align="center">
-									{item.marks.term1}
-								</TableCell>
-								<TableCell align="center">
-									{item.marks.term2}
-								</TableCell>
-								<TableCell align="center">
-									{item.marks.term3}
-								</TableCell>
-								<TableCell align="center">
-									{item.marks.term4}
-								</TableCell>
-								<TableCell align="center">
-									{item.marks.total}
-								</TableCell>
+						{student.scores.length > 0 ? (
+							student.scores.map((item, key) => (
+								<TableRow key={key}>
+									<TableCell component="th" scope="row" align="center">
+										{item.subject}
+									</TableCell>
+									<TableCell align="center">{item.marks.term1}</TableCell>
+									<TableCell align="center">{item.marks.term2}</TableCell>
+									<TableCell align="center">{item.marks.term3}</TableCell>
+									<TableCell align="center">{item.marks.term4}</TableCell>
+									<TableCell align="center">{item.marks.total}</TableCell>
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell>No subject to show</TableCell>
 							</TableRow>
-						))}
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>

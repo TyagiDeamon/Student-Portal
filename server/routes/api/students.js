@@ -14,35 +14,22 @@ import Teacher from "../../models/Teacher.js";
 router.post("/register", async (req, res) => {
 	//form validation
 
-	const teacher = await Teacher.findOne({
-		username: req.body.teacherUsername,
-	});
-
 	const { errors, isValid } = validateRegisterData(req.body);
 
 	if (!isValid) {
 		return res.status(404).send(errors);
 	}
 
-	Student.findOne({ roll: req.body.roll }).then((student) => {
+	Student.findOne({ email: req.body.email }).then(async (student) => {
 		if (student) {
-			return res.status(400).send({ roll: "Roll No already exists" });
+			return res.status(400).send({ email: "Account already exists" });
 		} else {
 			const newStudent = new Student({
 				name: req.body.name,
+				email: req.body.email,
 				password: req.body.password,
-				roll: req.body.roll,
-				scores: [{
-					subject: teacher.subject,
-				}],
-				
+				scores: [],
 			});
-			
-			teacher.students.push({
-				name: req.body.name,
-				roll: req.body.roll,
-			});
-			teacher.save();
 
 			// Hash password before saving in database
 			bcrypt.genSalt(10, (err, salt) => {
@@ -73,19 +60,13 @@ router.post("/login", (req, res) => {
 		return res.status(400).send(errors);
 	}
 
-	const roll = req.body.roll;
+	const email = req.body.email;
 
 	const password = req.body.password;
 
-	Student.findOne({ roll }).then((student) => {
+	Student.findOne({ email }).then((student) => {
 		if (!student) {
-			return res
-				.status(404)
-				.send({ name: "Student not found" });
-		}
-
-		if (student.name != req.body.name) {
-			return res.status(404).send({ name: "Name doesn't match with the provided Roll No" });
+			return res.status(404).send({ email: "Account not found" });
 		}
 		// Check password
 		bcrypt.compare(password, student.password).then((isMatch) => {
@@ -94,25 +75,24 @@ router.post("/login", (req, res) => {
 				// Create JWT Payload
 				const payload = {
 					id: student.id,
-					roll: student.roll,
+					email: student.email,
 				}; // Sign token
 				jwt.sign(
 					payload,
 					process.env.secretOrKey,
 					{
-						expiresIn: 31556926, // 1 year in seconds
+						expiresIn: 86400, // 1 day in seconds
 					},
 					(err, token) => {
 						res.json({
 							success: true,
+							name: student.name,
 							token: "Bearer " + token,
 						});
 					}
 				);
 			} else {
-				return res
-					.status(400)
-					.send({ passwordincorrect: "Password incorrect" });
+				return res.status(400).send({ password: "Password incorrect" });
 			}
 		});
 	});

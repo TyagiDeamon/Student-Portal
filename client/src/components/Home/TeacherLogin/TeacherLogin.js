@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,15 +26,17 @@ const useStyles = makeStyles((theme) => ({
 export default function TeacherLogin() {
 	const classes = useStyles();
 	const [teacher, setTeacher] = useState({
-		username: "",
+		email: "",
 		password: "",
 	});
 
-	let finalRes = {};
+	const [passwordVisible, setPasswordVisible] = useState(false);
 
+	let finalRes = {};
+	let successRes = {};
 	const loginTeacher = async () => {
 		try {
-			await axios.post(
+			successRes = await axios.post(
 				"https://student---portal.herokuapp.com/authTeacher/login",
 				teacher
 			);
@@ -35,17 +44,17 @@ export default function TeacherLogin() {
 			finalRes = error.response.data;
 		}
 
-		if (finalRes.username) {
-			alert(finalRes.username);
+		console.log(successRes);
+
+		if (finalRes.email) {
+			alert(finalRes.email);
 		} else if (finalRes.password) {
 			alert(finalRes.password);
 		} else {
-			localStorage.setItem(
-				`https://kt-studentportal.netlify.app/teacher/${teacher.username}`,
-				JSON.stringify(teacher.username)
-			);
+			localStorage.setItem("teacher", JSON.stringify(teacher.email));
+			localStorage.setItem("teacherName", successRes.data.name);
 
-			window.location = `https://kt-studentportal.netlify.app/teacher/${teacher.username}`;
+			window.location.reload(false);
 		}
 	};
 
@@ -54,34 +63,51 @@ export default function TeacherLogin() {
 			<h2>Teacher Login</h2>
 			<form className={classes.root} noValidate autoComplete="off">
 				<TextField
-					label="Username"
+					label="Email"
 					style={{ margin: "10px 20px" }}
 					fullWidth
 					margin="normal"
-					variant="filled"
-					value={teacher.username}
+					variant="outlined"
+					value={teacher.email}
 					onChange={(event) => {
 						setTeacher({
 							...teacher,
-							username: event.target.value,
+							email: event.target.value,
 						});
 					}}
 				/>
-				<TextField
-					label="Password"
-					type="password"
+
+				<FormControl
+					variant="outlined"
 					style={{ margin: "10px 20px" }}
 					fullWidth
 					margin="normal"
-					variant="filled"
-					value={teacher.password}
-					onChange={(event) => {
-						setTeacher({
-							...teacher,
-							password: event.target.value,
-						});
-					}}
-				/>
+				>
+					<InputLabel>Password</InputLabel>
+					<OutlinedInput
+						variant="outlined"
+						type={passwordVisible ? "text" : "password"}
+						value={teacher.password}
+						onChange={(event) => {
+							setTeacher({
+								...teacher,
+								password: event.target.value,
+							});
+						}}
+						endAdornment={
+							<InputAdornment position="end">
+								<IconButton
+									aria-label="toggle password visibility"
+									onClick={() => setPasswordVisible(!passwordVisible)}
+									edge="end"
+								>
+									{passwordVisible ? <Visibility /> : <VisibilityOff />}
+								</IconButton>
+							</InputAdornment>
+						}
+						labelWidth={70}
+					/>
+				</FormControl>
 
 				<Button
 					variant="contained"

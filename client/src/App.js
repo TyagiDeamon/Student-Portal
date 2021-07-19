@@ -1,26 +1,38 @@
 import { Container, Grow } from "@material-ui/core";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
 import "./App.css";
-import Home from "./components/Home/Home.js"
+import Home from "./components/Home/Home.js";
 import TeacherHome from "./components/TeacherHome/TeacherHome.js";
 import StudentHome from "./components/StudentHome/StudentHome.js";
-import useStyles from "./style"
+import useStyles from "./style";
+import Footer from "./components/Footer/Footer";
 
 function App() {
 	const classes = useStyles();
+	let teacher = null;
+	teacher = localStorage.getItem("teacher");
+	let student = null;
+	student = localStorage.getItem("student");
+
 	return (
 		<div className={`${classes.body} App`}>
-			<BrowserRouter>
-				<Container maxWidth="lg">
+			<Container maxWidth="lg">
+				{!teacher && !student && (
 					<Grow in>
-						<Switch>
-							<Route path="/" exact component={Home} />
-							<Route path="/teacher" component={TeacherHome} />
-							<Route path="/student" component={StudentHome} />
-						</Switch>
+						<Home />
 					</Grow>
-				</Container>
-			</BrowserRouter>
+				)}
+				{student && (
+					<Grow in>
+						<StudentHome />
+					</Grow>
+				)}
+				{teacher && (
+					<Grow in>
+						<TeacherHome />
+					</Grow>
+				)}
+			</Container>
+			<Footer />
 		</div>
 	);
 }

@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-// import keys from "./config/keys.js";
 import studentRoutes from "./routes/student_routes.js";
 import teacherRoutes from "./routes/teacher_routes.js";
 import passport from "passport";

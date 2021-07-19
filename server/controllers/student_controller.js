@@ -3,19 +3,20 @@ import Teacher from "../models/Teacher.js";
 
 export const getStudents = async (req, res) => {
 	try {
-		const allStudents = await Student.find();
+		const allStudents = await Student.findOne({ email: req.body });
+
 		res.status(200).json(allStudents);
 	} catch (err) {
-		res.status(404).send({ message: err.message });
+		res.status(404).json({ message: err.message });
 	}
 };
 
-export const getStudentByRoll = async (req, res) => {
+export const getStudentByEmail = async (req, res) => {
 	try {
-		const student = await Student.findOne({ roll: req.params.roll });
+		const student = await Student.findOne({ email: req.params.email });
 		res.status(200).json(student);
 	} catch (err) {
-		res.status(404).send({ message: err.message });
+		res.status(404).json({ message: err.message });
 	}
 };
 
@@ -57,10 +58,6 @@ export const updateMarks = async (req, res) => {
 			roll: request.roll,
 		});
 
-		if (!student) {
-			return res.status(404).send("Student not found")
-		}
-
 		const teacher = await Teacher.findOne({ username: request.username });
 
 		student.scores.map((item) => {
@@ -89,7 +86,7 @@ export const updateMarks = async (req, res) => {
 		});
 
 		await student.save();
-		
+
 		teacher.students.map((item) => {
 			if (item.roll == request.roll) {
 				const q = request.term;

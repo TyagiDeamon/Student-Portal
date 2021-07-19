@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, AppBar, Grid } from "@material-ui/core";
 import CustomNavbar from "../Navbar/Navbar.js";
 import useStyles from "../../style";
 import MarksTable from "./MarksTable/MarksTable";
 import Button from "@material-ui/core/Button";
-import Footer from "../Footer/Footer";
+import CustomModal from "../CustomModal/CustomModal";
 
 const navbar = {
-	title: "Welcome Student",
+	title: `Welcome ${localStorage.getItem("studentName")}`,
 };
 
 const StudentHome = () => {
-	const logOut = () => {
-		localStorage.removeItem(window.location);
+	const [logoutModal, setLogoutModal] = useState(false);
 
-		window.location = "https://kt-studentportal.netlify.app/";
+	const handleLogout = () => {
+		setLogoutModal(true);
+	};
+
+	const handleCloseLogout = () => {
+		setLogoutModal(false);
+	};
+	const logOut = () => {
+		localStorage.removeItem("student");
+		localStorage.removeItem("studentName");
+
+		window.location.reload(false);
 	};
 
 	const classes = useStyles();
@@ -35,24 +45,25 @@ const StudentHome = () => {
 					</Grid>
 
 					<Grid item xs={12} md={4}>
+						<CustomModal
+							modal={logoutModal}
+							onClose={handleCloseLogout}
+							desc={<h4>Are you sure?</h4>}
+							onClickbutton1={logOut}
+							onClickbutton2={handleCloseLogout}
+							button1="Yes"
+							button2="No"
+						/>
 						<Button
+							style={{ margin: "30px 0" }}
 							size="large"
 							variant="contained"
-							style={{
-								backgroundColor: "steelblue",
-								color: "white",
-								margin: "0 auto",
-								width: "80%",
-							}}
-							className={classes.margin}
-							onClick={logOut}
+							className={classes.openButton}
+							onClick={handleLogout}
 						>
 							Logout
 						</Button>
 					</Grid>
-				</Grid>
-				<Grid>
-					<Footer />
 				</Grid>
 			</Container>
 		</>

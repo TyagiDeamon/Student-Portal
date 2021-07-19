@@ -3,7 +3,7 @@ import {
 	getStudents,
 	addStudent,
 	deleteStudent,
-	getStudentByRoll,
+	getStudentByEmail,
 	updateMarks
 } from "../controllers/student_controller.js";
 
@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/", getStudents);
 
-router.get("/:roll", getStudentByRoll);
+router.get("/:email", getStudentByEmail);
 
 router.post("/", addStudent);
 

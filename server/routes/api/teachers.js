@@ -9,27 +9,27 @@ import validateLoginData from "../../Auth_teacher/login.js";
 
 import Teacher from "../../models/Teacher.js";
 
-// import keys from "../../config/keys.js"
-
 router.post("/register", (req, res) => {
 	//form validation
 
 	const { errors, isValid } = validateRegisterData(req.body);
 
 	if (!isValid) {
-		return res.status(404).send(errors);
+		return res.status(404).json(errors);
 	}
 
-	Teacher.findOne({ username: req.body.username }).then((teacher) => {
+	Teacher.findOne({ email: req.body.email }).then((teacher) => {
 		if (teacher) {
 			return res
 				.status(400)
-				.send({ username: "Username already exists!" });
+				.json({ email: "Account already registered with this email" });
 		} else {
 			const newTeacher = new Teacher({
-				username: req.body.username,
+				name: req.body.name,
+				email: req.body.email,
 				subject: req.body.subject,
 				password: req.body.password,
+				classes: [],
 			});
 
 			// Hash password before saving in database
@@ -59,13 +59,13 @@ router.post("/login", (req, res) => {
 		return res.status(400).send(errors);
 	}
 
-	const username = req.body.username;
+	const email = req.body.email;
 
 	const password = req.body.password;
 
-	Teacher.findOne({ username }).then((teacher) => {
+	Teacher.findOne({ email }).then((teacher) => {
 		if (!teacher) {
-			return res.status(404).send({ username: "Username not found" });
+			return res.status(404).send({ email: "Email not found" });
 		}
 		// Check password
 		bcrypt.compare(password, teacher.password).then((isMatch) => {
@@ -74,7 +74,7 @@ router.post("/login", (req, res) => {
 				// Create JWT Payload
 				const payload = {
 					id: teacher.id,
-					username: teacher.username,
+					email: teacher.email,
 				}; // Sign token
 				jwt.sign(
 					payload,
@@ -85,14 +85,13 @@ router.post("/login", (req, res) => {
 					(err, token) => {
 						res.json({
 							success: true,
+							name: teacher.name,
 							token: "Bearer " + token,
 						});
 					}
 				);
 			} else {
-				return res
-					.status(400)
-					.send({ password: "Password incorrect" });
+				return res.status(400).send({ password: "Password incorrect" });
 			}
 		});
 	});

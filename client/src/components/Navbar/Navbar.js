@@ -20,7 +20,7 @@ const CustomNavbar = (props) => {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
-			<AppBar style={{ backgroundColor: "#008080" }} position="static">
+			<AppBar style={{ backgroundColor: "#000000" }} position="static">
 				<Toolbar>
 					<Typography variant="h6" className={classes.title}>
 						{props.title}
