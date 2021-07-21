@@ -6,4 +6,4 @@ Student Portal using MERN stack.
 * User Authentication through JWT.
 * Deployed using Netlify and Heroku.
 * Technologies used: ReactJs, NodeJs, ExpressJs, MongoDB, Material UI.
-* Link to: Github, [Live Site](https://kt-studentportal.netlify.app/).
+* Link to: [Live Site](https://kt-studentportal.netlify.app/).
