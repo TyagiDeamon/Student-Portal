@@ -1,8 +1,8 @@
 import { Container, Grow } from "@material-ui/core";
 import "./App.css";
-import Home from "./components/Home/Home.js";
-import TeacherHome from "./components/TeacherHome/TeacherHome.js";
-import StudentHome from "./components/StudentHome/StudentHome.js";
+import Home from "./Home/Home.js";
+import TeacherHome from "./TeacherHome/TeacherHome.js";
+import StudentHome from "./StudentHome/StudentHome.js";
 import useStyles from "./style";
 import Footer from "./components/Footer/Footer";
 

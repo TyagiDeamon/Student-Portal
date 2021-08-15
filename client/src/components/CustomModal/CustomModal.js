@@ -24,7 +24,7 @@ const CustomModal = (props) => {
 				<div
 					className={classes.paper}
 					style={{ display: "grid" }}
-					justify="space-evenly"
+					justifycontent="space-evenly"
 					alignitems="stretch"
 				>
 					<div id="transition-modal-description">{props.desc}</div>

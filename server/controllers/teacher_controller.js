@@ -183,6 +183,7 @@ export const createClass = async (req, res) => {
 };
 
 export const updateMarks = async (req, res) => {
+
 	try {
 		const teacher = await Teacher.findOne({ email: req.body.teacherEmail });
 
@@ -199,7 +200,7 @@ export const updateMarks = async (req, res) => {
 					}
 
 					if (!x) {
-						res.status(400).send("Roll No not found");
+						res.status(404).send("Roll No not found");
 						return;
 					}
 

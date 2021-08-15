@@ -5,22 +5,23 @@ import studentRoutes from "./routes/student_routes.js";
 import teacherRoutes from "./routes/teacher_routes.js";
 import passport from "passport";
 import "./config/passport.js";
-import Teacher from "./models/Teacher.js";
+import "dotenv/config";
 import authTeacher from "./routes/api/teachers.js";
 import authStudent from "./routes/api/students.js";
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 
 app.use(express.json({ limit: "20mb", extended: true }));
 app.use(express.urlencoded({ limit: "20mb", extended: true }));
 
 app.use(passport.initialize());
 
-app.use("/student", studentRoutes);
-app.use("/authTeacher", authTeacher);
-app.use("/authStudent", authStudent);
-app.use("/teacher", teacherRoutes);
+app.options("*", cors());
+app.use("/student", cors(), studentRoutes);
+app.use("/authTeacher", cors(), authTeacher);
+app.use("/authStudent", cors(), authStudent);
+app.use("/teacher", cors(), teacherRoutes);
 
 app.get("/", (req, res) => {
 	res.send("Welcome to Student Portal API");

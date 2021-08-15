@@ -15,8 +15,16 @@ export default function validateRegisterData(data) {
 	data.password = !isEmpty(data.password) ? data.password : "";
 	data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
+	if (!validateEmail(data.email)) {
+		errors.email = "Email should be valid";
+	}
+
 	if (Validator.isEmpty(data.name)) {
-		errors.name = "name field is required";
+		errors.name = "Name field is required";
+	}
+
+	if (Validator.isEmpty(data.email)) {
+		errors.email = "Email field is required";
 	}
 
 	if (Validator.isEmpty(data.subject)) {
@@ -37,10 +45,6 @@ export default function validateRegisterData(data) {
 
 	if (!Validator.equals(data.password, data.password2)) {
 		errors.password2 = "Passwords must match";
-	}
-
-	if (!validateEmail(data.email)) {
-		errors.email = "Email should be valid";
 	}
 
 	return {

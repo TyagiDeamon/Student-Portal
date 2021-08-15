@@ -13,16 +13,16 @@ export default function validateLoginData(data) {
 	data.email = !isEmpty(data.email) ? data.email : "";
 	data.password = !isEmpty(data.password) ? data.password : "";
 
+	if (!validateEmail(data.email)) {
+		errors.email = "Email should be valid";
+	}
+
 	if (Validator.isEmpty(data.email)) {
 		errors.email = "Email field is required";
 	}
 
 	if (Validator.isEmpty(data.password)) {
 		errors.password = "Password field is required";
-	}
-
-	if (!validateEmail(data.email)) {
-		errors.email = "Email should be valid";
 	}
 
 	return {
