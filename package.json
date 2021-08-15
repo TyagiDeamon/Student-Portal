@@ -1,0 +1,23 @@
+{
+	"name": "student-portal",
+	"version": "1.0.0",
+	"description": "Student Portal using MERN stack.",
+	"main": "server/index.js",
+	"scripts": {
+		"start": "node server/index.js",
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+	},
+	"engines": {
+		"node": "14.15.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/TyagiDeamon/Student-Portal.git"
+	},
+	"author": "Karan Tyagi",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/TyagiDeamon/Student-Portal/issues"
+	},
+	"homepage": "https://github.com/TyagiDeamon/Student-Portal#readme"
+}
