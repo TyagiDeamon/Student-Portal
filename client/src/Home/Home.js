@@ -115,13 +115,16 @@ export default function Home() {
 					desc={<WelcomeMessage />}
 					onClose={() => {
 						setmodalWelcome(false);
-						localStorage.setItem("visited", true);
 					}}
 					width="80%"
-					button1="Close"
+					button1="Don't show again"
 					onClickbutton1={() => {
 						setmodalWelcome(false);
 						localStorage.setItem("visited", true);
+					}}
+					button2="Close"
+					onClickbutton2={() => {
+						setmodalWelcome(false);
 					}}
 				/>
 			)}
