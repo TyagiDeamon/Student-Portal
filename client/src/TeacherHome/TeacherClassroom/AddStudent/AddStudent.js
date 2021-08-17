@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import CustomAlert from "../../../components/CustomAlert/CustomAlert";
+import CustomBackdrop from "../../../components/CustomBackdrop/CustomBackdrop";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -26,7 +27,9 @@ export default function AddStudent() {
 
 	const classes = useStyles();
 
-	const [student, setStudent] = useState({
+	const [query, setStudent] = useState({
+		teacherEmail: savedEmail,
+		classname: savedClass,
 		email: "",
 	});
 
@@ -35,19 +38,18 @@ export default function AddStudent() {
 	const [successMessage, setSuccessMessage] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const [openBackdrop, setOpenBackdrop] = useState(false);
+
 	const addStudent = async () => {
-		if (!student.email) {
+		if (!query.email) {
 			return;
 		}
 		if (!savedEmail || !savedClass) {
 			alert("Please login to continue");
 			return;
 		}
-		const query = {
-			teacherEmail: savedEmail,
-			classname: savedClass,
-			email: student.email,
-		};
+
+		setOpenBackdrop(true);
 
 		let finalRes = "";
 
@@ -59,6 +61,8 @@ export default function AddStudent() {
 		} catch (error) {
 			finalRes = error.response.data;
 		}
+
+		setOpenBackdrop(false);
 
 		if (finalRes === "") {
 			setSuccessMessage("Student added successfully");
@@ -73,6 +77,7 @@ export default function AddStudent() {
 	};
 	return (
 		<>
+			<CustomBackdrop open={openBackdrop} />
 			<h4>Add Student</h4>
 			<form
 				className={classes.root}
@@ -92,10 +97,10 @@ export default function AddStudent() {
 					fullWidth
 					margin="normal"
 					variant="outlined"
-					value={student.email}
+					value={query.email}
 					onChange={(event) => {
 						setStudent({
-							...student,
+							...query,
 							email: event.target.value,
 						});
 					}}

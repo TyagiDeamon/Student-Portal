@@ -44,7 +44,14 @@ export default function ShowStudent() {
 	return (
 		<>
 			<h2>All Students</h2>
-			<TableContainer component={Paper} style={{ maxHeight: "60vh" }}>
+			<TableContainer
+				component={Paper}
+				style={{
+					maxHeight: "60vh",
+					overflow: "scroll",
+					scrollbarWidth: "none",
+				}}
+			>
 				<Table
 					stickyHeader
 					className={classes.table}

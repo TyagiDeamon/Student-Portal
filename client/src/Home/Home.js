@@ -2,6 +2,8 @@ import { Container, AppBar, Grid } from "@material-ui/core";
 import useStyles from "../style.js";
 import React, { useState } from "react";
 import CustomNavbar from "../components/Navbar/Navbar";
+import CustomModal from "../components/CustomModal/CustomModal";
+import WelcomeMessage from "../components/WelcomeMessage/WelcomeMessage";
 import TeacherSignup from "./TeacherSignup/TeacherSignup.js";
 import TeacherLogin from "./TeacherLogin/TeacherLogin";
 import StudentLogin from "./StudentLogin/StudentLogin";
@@ -16,6 +18,11 @@ export default function Home() {
 	const classes = useStyles();
 	const [loginState, setLoginState] = useState(true);
 	const [signupState, setSignupState] = useState(false);
+
+	const [modalWelcome, setmodalWelcome] = useState(true);
+
+	const visited = localStorage.getItem("visited");
+
 	return (
 		<>
 			<CustomNavbar {...navbar} />
@@ -102,6 +109,22 @@ export default function Home() {
 					)}
 				</Grid>
 			</Container>
+			{!visited && (
+				<CustomModal
+					modal={modalWelcome}
+					desc={<WelcomeMessage />}
+					onClose={() => {
+						setmodalWelcome(false);
+						localStorage.setItem("visited", true);
+					}}
+					width="80%"
+					button1="Close"
+					onClickbutton1={() => {
+						setmodalWelcome(false);
+						localStorage.setItem("visited", true);
+					}}
+				/>
+			)}
 		</>
 	);
 }

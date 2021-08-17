@@ -8,8 +8,6 @@ import validateRegisterData from "../../Auth_student/register.js";
 import validateLoginData from "../../Auth_student/login.js";
 
 import Student from "../../models/student_schema.js";
-import Teacher from "../../models/Teacher.js";
-// import keys from "../../config/keys.js";
 
 router.post("/register", async (req, res) => {
 	//form validation
@@ -22,7 +20,9 @@ router.post("/register", async (req, res) => {
 
 	Student.findOne({ email: req.body.email }).then(async (student) => {
 		if (student) {
-			return res.status(400).send({ email: "Account already exists" });
+			return res
+				.status(400)
+				.send({ email: "Account already registered with this email" });
 		} else {
 			const newStudent = new Student({
 				name: req.body.name,
@@ -92,7 +92,7 @@ router.post("/login", (req, res) => {
 					}
 				);
 			} else {
-				return res.status(400).send({ password: "Password incorrect" });
+				return res.status(400).send({ password: "Incorrect password" });
 			}
 		});
 	});

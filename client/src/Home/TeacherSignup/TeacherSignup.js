@@ -11,6 +11,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import CustomAlert from "../../components/CustomAlert/CustomAlert";
+import CustomBackdrop from "../../components/CustomBackdrop/CustomBackdrop";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -42,6 +43,8 @@ export default function TeacherSignup() {
 	const [successMessage, setSuccessMessage] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const [openBackdrop, setOpenBackdrop] = useState(false);
+
 	let finalRes = {};
 
 	const createTeacher = async () => {
@@ -54,6 +57,7 @@ export default function TeacherSignup() {
 		) {
 			return;
 		}
+		setOpenBackdrop(true);
 		try {
 			await axios.post(
 				"https://student---portal.herokuapp.com/authTeacher/register",
@@ -62,7 +66,7 @@ export default function TeacherSignup() {
 		} catch (error) {
 			finalRes = error.response.data;
 		}
-
+		setOpenBackdrop(false);
 		if (finalRes.name) {
 			setErrorMessage(finalRes.name);
 			setErrorAlert(true);
@@ -92,6 +96,7 @@ export default function TeacherSignup() {
 	};
 	return (
 		<>
+			<CustomBackdrop open={openBackdrop} />
 			<h2>Teacher Signup</h2>
 			<form
 				className={classes.root}

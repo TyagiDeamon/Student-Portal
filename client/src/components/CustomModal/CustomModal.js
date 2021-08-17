@@ -23,7 +23,7 @@ const CustomModal = (props) => {
 			<Fade in={props.modal}>
 				<div
 					className={classes.paper}
-					style={{ display: "grid" }}
+					style={{ display: "grid", width:`${props.width}`, minWidth: "250px", maxHeight: "60vh", overflowY: "auto"}}
 					justifycontent="space-evenly"
 					alignitems="stretch"
 				>

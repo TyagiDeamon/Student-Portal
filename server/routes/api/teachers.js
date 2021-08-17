@@ -65,7 +65,7 @@ router.post("/login", (req, res) => {
 
 	Teacher.findOne({ email }).then((teacher) => {
 		if (!teacher) {
-			return res.status(404).send({ email: "Email not found" });
+			return res.status(404).send({ email: "Account not found" });
 		}
 		// Check password
 		bcrypt.compare(password, teacher.password).then((isMatch) => {
@@ -91,7 +91,7 @@ router.post("/login", (req, res) => {
 					}
 				);
 			} else {
-				return res.status(400).send({ password: "Password incorrect" });
+				return res.status(400).send({ password: "Incorrect password" });
 			}
 		});
 	});

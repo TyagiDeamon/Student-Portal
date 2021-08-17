@@ -8,6 +8,7 @@ import UpdateMarks from "./UpdateMarks/UpdateMarks";
 import RemoveStudent from "./RemoveStudent/RemoveStudent";
 import Button from "@material-ui/core/Button";
 import CustomModal from "../../components/CustomModal/CustomModal";
+
 const navbar = {
 	title: `Welcome ${localStorage.getItem("teacherName")}`,
 };
@@ -71,6 +72,7 @@ const TeacherClassroom = () => {
 							onClickbutton1={logOut}
 							button1="Yes"
 							button2="No"
+							width="30%"
 						/>
 						<Button
 							size="large"
@@ -87,14 +89,15 @@ const TeacherClassroom = () => {
 									modal={item.modal}
 									onClickbutton1={() => {
 										item.setmodal(false);
-										window.location.reload(false);
+										window.location.reload();
 									}}
 									onClose={() => {
 										item.setmodal(false);
-										window.location.reload(false);
+										window.location.reload();
 									}}
 									desc={item.form}
 									button1="Cancel"
+									width="30%"
 								/>
 								<Button
 									size="large"

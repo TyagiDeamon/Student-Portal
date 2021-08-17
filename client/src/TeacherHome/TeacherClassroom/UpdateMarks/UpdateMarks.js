@@ -7,6 +7,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import CustomAlert from "../../../components/CustomAlert/CustomAlert";
+import CustomBackdrop from "../../../components/CustomBackdrop/CustomBackdrop";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -46,6 +47,8 @@ export default function UpdateMarks() {
 	const [successMessage, setSuccessMessage] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const [openBackdrop, setOpenBackdrop] = useState(false);
+
 	const handleChange = (event) => {
 		setQuery({
 			...query,
@@ -62,6 +65,8 @@ export default function UpdateMarks() {
 			return;
 		}
 
+		setOpenBackdrop(true);
+
 		let finalRes = "";
 
 		try {
@@ -72,6 +77,8 @@ export default function UpdateMarks() {
 		} catch (error) {
 			finalRes = error.response.data;
 		}
+
+		setOpenBackdrop(false);
 
 		if (finalRes) {
 			setErrorMessage(finalRes);
@@ -90,6 +97,7 @@ export default function UpdateMarks() {
 	};
 	return (
 		<>
+			<CustomBackdrop open={openBackdrop} />
 			<h4>Update Marks</h4>
 			<form
 				className={classes.root}

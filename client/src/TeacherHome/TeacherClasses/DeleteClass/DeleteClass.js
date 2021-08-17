@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import useStyles from "../../../style";
 import CustomAlert from "../../../components/CustomAlert/CustomAlert";
+import CustomBackdrop from "../../../components/CustomBackdrop/CustomBackdrop";
 
 export default function DeleteClass() {
 	let storedEmail = localStorage.getItem("teacher");
@@ -21,6 +22,8 @@ export default function DeleteClass() {
 	const [successMessage, setSuccessMessage] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const [openBackdrop, setOpenBackdrop] = useState(false);
+
 	var finalRes = "";
 
 	const deleteClass = async () => {
@@ -32,6 +35,8 @@ export default function DeleteClass() {
 			return;
 		}
 
+		setOpenBackdrop(true);
+
 		try {
 			await axios.post(
 				"https://student---portal.herokuapp.com/teacher/deleteClass",
@@ -40,6 +45,8 @@ export default function DeleteClass() {
 		} catch (error) {
 			finalRes = error.response.data;
 		}
+
+		setOpenBackdrop(false);
 
 		if (finalRes === "") {
 			setSuccessMessage(`Successfully deleted Class: ${query.classname}`);
@@ -55,6 +62,7 @@ export default function DeleteClass() {
 	};
 	return (
 		<>
+			<CustomBackdrop open={openBackdrop} />
 			<h4>Delete Class</h4>
 			<form
 				className={classes.root}

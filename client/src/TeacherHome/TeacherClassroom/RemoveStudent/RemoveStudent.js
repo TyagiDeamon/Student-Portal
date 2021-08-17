@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import CustomAlert from "../../../components/CustomAlert/CustomAlert";
+import CustomBackdrop from "../../../components/CustomBackdrop/CustomBackdrop";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -37,6 +38,8 @@ export default function RemoveStudent() {
 	const [successMessage, setSuccessMessage] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const [openBackdrop, setOpenBackdrop] = useState(false);
+
 	let finalRes = "";
 
 	const removeStudent = async () => {
@@ -48,6 +51,8 @@ export default function RemoveStudent() {
 			return;
 		}
 
+		setOpenBackdrop(true);
+
 		try {
 			await axios.post(
 				"https://student---portal.herokuapp.com/teacher/removeStudent",
@@ -56,6 +61,8 @@ export default function RemoveStudent() {
 		} catch (error) {
 			finalRes = error.response.data;
 		}
+
+		setOpenBackdrop(false);
 
 		if (finalRes === "") {
 			setSuccessMessage(`Successfully removed Roll No: ${query.roll}`);
@@ -72,6 +79,7 @@ export default function RemoveStudent() {
 	};
 	return (
 		<>
+			<CustomBackdrop open={openBackdrop} />
 			<h4>Remove Student</h4>
 			<form
 				className={classes.root}

@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import useStyles from "../../../style";
 import CustomAlert from "../../../components/CustomAlert/CustomAlert";
+import CustomBackdrop from "../../../components/CustomBackdrop/CustomBackdrop";
 
 export default function CreateClass() {
 	let storedEmail = localStorage.getItem("teacher");
@@ -21,6 +22,8 @@ export default function CreateClass() {
 	const [successMessage, setSuccessMessage] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const [openBackdrop, setOpenBackdrop] = useState(false);
+
 	let finalRes = null;
 
 	const createClass = async () => {
@@ -32,6 +35,8 @@ export default function CreateClass() {
 			return;
 		}
 
+		setOpenBackdrop(true);
+
 		try {
 			await axios.post(
 				"https://student---portal.herokuapp.com/teacher/createClass",
@@ -40,6 +45,8 @@ export default function CreateClass() {
 		} catch (error) {
 			finalRes = error.response.data;
 		}
+
+		setOpenBackdrop(false);
 
 		if (finalRes) {
 			setErrorMessage(finalRes);
@@ -56,6 +63,7 @@ export default function CreateClass() {
 
 	return (
 		<>
+			<CustomBackdrop open={openBackdrop} />
 			<h4>Create class</h4>
 			<form
 				className={classes.root}

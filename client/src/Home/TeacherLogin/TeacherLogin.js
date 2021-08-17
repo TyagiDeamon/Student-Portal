@@ -11,6 +11,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import CustomAlert from "../../components/CustomAlert/CustomAlert";
+import CustomBackdrop from "../../components/CustomBackdrop/CustomBackdrop";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TeacherLogin() {
 	const classes = useStyles();
+
 	const [teacher, setTeacher] = useState({
 		email: "",
 		password: "",
@@ -36,12 +38,17 @@ export default function TeacherLogin() {
 	const [errorAlert, setErrorAlert] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const [openBackdrop, setOpenBackdrop] = useState(false);
+
 	let finalRes = {};
 	let successRes = {};
 	const loginTeacher = async () => {
 		if (!teacher.email || !teacher.password) {
 			return;
 		}
+
+		setOpenBackdrop(true);
+
 		try {
 			successRes = await axios.post(
 				"https://student---portal.herokuapp.com/authTeacher/login",
@@ -50,6 +57,8 @@ export default function TeacherLogin() {
 		} catch (error) {
 			finalRes = error.response.data;
 		}
+
+		setOpenBackdrop(false);
 
 		if (finalRes.email) {
 			setErrorMessage(finalRes.email);
@@ -61,12 +70,13 @@ export default function TeacherLogin() {
 			localStorage.setItem("teacher", JSON.stringify(teacher.email));
 			localStorage.setItem("teacherName", successRes.data.name);
 
-			window.location.reload(false);
+			window.location.reload();
 		}
 	};
 
 	return (
 		<>
+			<CustomBackdrop open={openBackdrop} />
 			<h2>Teacher Login</h2>
 			<form
 				className={classes.root}

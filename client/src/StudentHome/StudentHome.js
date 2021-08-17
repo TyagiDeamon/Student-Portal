@@ -24,7 +24,7 @@ const StudentHome = () => {
 		localStorage.removeItem("student");
 		localStorage.removeItem("studentName");
 
-		window.location.reload(false);
+		window.location.reload();
 	};
 
 	const classes = useStyles();
