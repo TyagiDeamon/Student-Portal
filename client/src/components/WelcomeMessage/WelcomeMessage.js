@@ -7,16 +7,21 @@ const WelcomeMessage = () => {
 				<h2>Welcome</h2>
 				<p>
 					This portal is designed to help students and teachers interact
-					effectively.
+					effectively. If you are new to this portal, please register yourself.
 					<br />
-					If you are new to this portal, please register yourself.
-					<br />
-					After successful registration, teacher can create classes for
-					students, and in each class, the teacher can add student using the
-					email id of student, update marks of the students, and can remove the
-					students from the class as well.
+					After successful registration, a teacher can create classes for
+					students. In each class, the teacher can add students using the email
+					id of a student, update the marks of the students, and remove the
+					students as well.
 					<br />
 					Students will be able to see their marks in each subject after login.
+				</p>
+				<strong>Sample accounts for experiencing the portal</strong>
+				<p>
+					t1@t.com, t2@t.com, and t3@t.com are the teacher accounts, and
+					s1@s.com, s2@s.com, and s3@s.com are the student accounts. The
+					password for each is 123456. You can use these to play around and
+					experience the portal.
 				</p>
 			</div>
 			<div>
@@ -31,12 +36,13 @@ const WelcomeMessage = () => {
 					</li>
 					<li>Notice section for displaying important information.</li>
 					<li>
-						Chat availability so that students and teachers can contact easily.
+						Chat availability so that students and teachers can contact
+						smoothly.
 					</li>
 				</ul>
 			</div>
 			<p>
-				Code for this project can be found{" "}
+				The code for this project can be found{" "}
 				<a href="https://github.com/TyagiDeamon/Student-Portal">here</a>. Thank
 				you for visiting!
 			</p>
